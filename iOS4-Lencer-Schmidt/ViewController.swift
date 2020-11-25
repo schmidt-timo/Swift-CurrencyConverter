@@ -30,24 +30,56 @@ class ViewController: UIViewController {
     }
     
     @IBAction func EUR(_ sender: Any) {
+        
+        let euro_to_usd = OptionalStringToDouble(optional: EURtoUSD.text)
+        let euro_to_gbp = OptionalStringToDouble(optional: EURtoGBP.text)
+        
+        let euro = OptionalStringToDouble(optional: EURfield.text)
+        
+        // USD-Feld berechnen
+        let usd = euro * euro_to_usd
+        USDfield.text = String(format: "%.2lf", usd)
+        
+        // GBP-Feld berechnen
+        let gbp = euro * euro_to_gbp
+        GBPfield.text = String(format: "%.2lf", gbp)
+        
     }
     
     
     @IBAction func USD(_ sender: Any) {
         
         let euro_to_usd = OptionalStringToDouble(optional: EURtoUSD.text)
+        let euro_to_gbp = OptionalStringToDouble(optional: EURtoGBP.text)
         
         let usdollar = OptionalStringToDouble(optional: USDfield.text)
         
-        // zurück in Euro rechnen
-        let euro: Double = usdollar / euro_to_usd
-        // zurück ins Feld schreiben (als String)
+        // Euro-Feld berechnen
+        let euro = usdollar / euro_to_usd
         EURfield.text = String(format: "%.2lf", euro)
+        
+        // GBP-Feld berechnen
+        let gbp = euro * euro_to_gbp
+        GBPfield.text = String(format: "%.2lf", gbp)
         
     }
     
     
     @IBAction func GBP(_ sender: Any) {
+        
+        let euro_to_usd = OptionalStringToDouble(optional: EURtoUSD.text)
+        let euro_to_gbp = OptionalStringToDouble(optional: EURtoGBP.text)
+        
+        let gbp = OptionalStringToDouble(optional: GBPfield.text)
+        
+        // Euro-Feld berechnen
+        let euro = gbp / euro_to_gbp
+        EURfield.text = String(format: "%.2lf", euro)
+        
+        // USD-Feld berechnen
+        let usd = euro * euro_to_usd
+        USDfield.text = String(format: "%.2lf", usd)
+        
     }
     
     func OptionalStringToDouble(optional : String?) -> Double {
