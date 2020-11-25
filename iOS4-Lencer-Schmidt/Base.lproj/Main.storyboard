@@ -103,8 +103,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="EURfield" destination="Fkq-rV-aWU" id="aTx-MK-42p"/>
                         <outlet property="EURtoGBP" destination="hnI-sa-uu6" id="tvL-V7-44J"/>
                         <outlet property="EURtoUSD" destination="NmF-QX-h69" id="gDN-9C-4h7"/>
+                        <outlet property="GBPfield" destination="Els-L7-CA7" id="8or-Du-uVL"/>
+                        <outlet property="USDfield" destination="7Zu-lW-9Nx" id="o19-xW-CyK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
