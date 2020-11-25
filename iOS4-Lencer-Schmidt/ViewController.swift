@@ -30,10 +30,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let gbp = euro * euro_to_gbp
         GBPfield.text = String(format: "%.2lf", gbp)
         
-        
-        
+        // Rounded Edges for Button
+        getButton.layer.cornerRadius = 10
+        getButton.clipsToBounds = true
     }
     
+    @IBOutlet weak var getButton: UIButton!
+    
+    @IBAction func buttonPressed(_ sender: Any) {
+    }
     
     @IBAction func ExchangeRateUSD(_ sender: Any) {
         
@@ -133,7 +138,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             urlObject = URL
         }
         
-        let url = try String(contentsOf: urlObject, encoding: .utf8)
+//        let url = try String(contentsOf: urlObject, encoding: .utf8)
         
     }
     
