@@ -19,7 +19,23 @@ class ViewController: UIViewController {
     }
     
     
-
+    @IBAction func ExchangeRateUSD(_ sender: Any) {
+    }
+    
+    @IBAction func ExchangeRateGBP(_ sender: Any) {
+    }
+    
+    @IBAction func EUR(_ sender: Any) {
+    }
+    
+    
+    @IBAction func USD(_ sender: Any) {
+    }
+    
+    
+    @IBAction func GBP(_ sender: Any) {
+    }
+    
 
 }
 
