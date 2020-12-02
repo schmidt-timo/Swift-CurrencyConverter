@@ -30,7 +30,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let gbp = euro * euro_to_gbp
         GBPfield.text = String(format: "%.2lf", gbp)
         
-        // Rounded Edges for Button
+        // Runde Kanten für den Button
         getButton.layer.cornerRadius = 10
         getButton.clipsToBounds = true
     }
@@ -38,28 +38,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var getButton: UIButton!
     
     @IBAction func buttonPressed(_ sender: Any) {
+        do {
+            try getExchangeRates()
+        }
+        catch {
+            print("error")
+        }
     }
     
     @IBAction func ExchangeRateUSD(_ sender: Any) {
-        
+        editExchangeRateUSD()
+    }
+    
+    func editExchangeRateUSD() {
         let euro_to_usd = OptionalStringToDouble(optional: EURtoUSD.text)
         let euro = OptionalStringToDouble(optional: EURfield.text)
         
         // USD-Feld berechnen
         let usd = euro * euro_to_usd
         USDfield.text = String(format: "%.2lf", usd)
-        
     }
     
     @IBAction func ExchangeRateGBP(_ sender: Any) {
-        
+        editExchangeRateGBP()
+    }
+    
+    func editExchangeRateGBP() {
         let euro_to_gbp = OptionalStringToDouble(optional: EURtoGBP.text)
         let euro = OptionalStringToDouble(optional: EURfield.text)
         
         // GBP-Feld berechnen
         let gbp = euro * euro_to_gbp
         GBPfield.text = String(format: "%.2lf", gbp)
-        
     }
     
     @IBAction func EUR(_ sender: Any) {
@@ -115,9 +125,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    // Tastatur ausblenden, wenn Enter gedrückt wird
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return false
+        textField.resignFirstResponder()
+        return false
     }
     
     func OptionalStringToDouble(optional : String?) -> Double {
@@ -130,18 +141,49 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return result
     }
     
+    // Funktion für die Abfrage des aktuellen Wechselkurses über die EZB
     func getExchangeRates() throws {
-        var urlObject: URL
-        let urlOptional = URL(string: "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml")
         
-        if let URL = urlOptional {
-            urlObject = URL
+        let urlString = URL(string: "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml")
+        var url: URL
+        
+        if let urlTemp = urlString {
+            url = urlTemp
+            
+            do {
+                let content = try String(contentsOf: url, encoding: .utf8)
+                
+                // Optional Range
+                let usd = content.range(of: "\"USD\" rate=\"")
+                                
+                let usd_startIndex = usd!.upperBound
+                let usd_endIndex = content.index(_:usd!.upperBound, offsetBy:6)
+                let usd_substring = content[usd_startIndex..<usd_endIndex]
+                
+                let gbp = content.range(of: "\"GBP\" rate=\"")
+
+                let gbp_startIndex = gbp!.upperBound
+                let gbp_endIndex = content.index(_:gbp!.upperBound, offsetBy:6)
+                let gbp_substring = content[gbp_startIndex..<gbp_endIndex]
+                
+                // Double
+                let USD = OptionalStringToDouble(optional: String(usd_substring))
+                let GBP = OptionalStringToDouble(optional: String(gbp_substring))
+                
+                // an Felder weitergeben
+                EURtoUSD.text = String(USD)
+                EURtoGBP.text = String(GBP)
+                
+                // alle Felder aktualisieren
+                editExchangeRateUSD()
+                editExchangeRateGBP()
+            }
+            catch {
+                // catch exceptions
+                print("Exception occured!")
+            }
         }
-        
-//        let url = try String(contentsOf: urlObject, encoding: .utf8)
-        
     }
-    
 
 }
 
