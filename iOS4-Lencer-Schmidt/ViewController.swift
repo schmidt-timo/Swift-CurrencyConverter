@@ -87,6 +87,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let gbp = euro * euro_to_gbp
         GBPfield.text = String(format: "%.2lf", gbp)
         
+        // Gerade editiertes Feld mit 2 Nachkommastellen
+        EURfield.text = String(format: "%.2lf", euro)
+        
     }
     
     
@@ -95,15 +98,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let euro_to_usd = OptionalStringToDouble(optional: EURtoUSD.text)
         let euro_to_gbp = OptionalStringToDouble(optional: EURtoGBP.text)
         
-        let usdollar = OptionalStringToDouble(optional: USDfield.text)
+        let usd = OptionalStringToDouble(optional: USDfield.text)
         
         // Euro-Feld berechnen
-        let euro = usdollar / euro_to_usd
+        let euro = usd / euro_to_usd
         EURfield.text = String(format: "%.2lf", euro)
         
         // GBP-Feld berechnen
         let gbp = euro * euro_to_gbp
         GBPfield.text = String(format: "%.2lf", gbp)
+        
+        // Gerade editiertes Feld mit 2 Nachkommastellen
+        USDfield.text = String(format: "%.2lf", usd)
         
     }
     
@@ -122,6 +128,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // USD-Feld berechnen
         let usd = euro * euro_to_usd
         USDfield.text = String(format: "%.2lf", usd)
+        
+        // Gerade editiertes Feld mit 2 Nachkommastellen
+        GBPfield.text = String(format: "%.2lf", gbp)
         
     }
     
